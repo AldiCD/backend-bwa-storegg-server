@@ -1,0 +1,72 @@
+<table id="example2" class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <th>No</th>
+        <th>Name Game</th>
+        <th>Item</th>
+        <th>Total Harga</th>
+        <th>Status</th>
+        <th>Nama Player</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%for(let i = 0;i < transcation.length;i++){%>
+      <tr>
+        <td><%= i +1%></td>
+        <td>
+            <ul class="list-inline">
+                <li class="list-inline-item">
+                <img width="48px" height="48px" src="http://localhost:3000/uploads/<%=transcation[i].historyVoucherTopup.thumbnail%>" alt="">
+                 </li>
+            </ul>
+            <%= transcation[i]?.historyVoucherTopup?.gameName%>
+            <br>
+            <%= transcation[i]?.historyVoucherTopup?.category%>
+        </td>
+        <td>
+            <%= transcation[i]?.historyVoucherTopup?.coinQuantity%>
+            <%= transcation[i]?.historyVoucherTopup?.coinName%>
+
+        </td>
+        <td> <%= transcation[i].value%></td>
+        <td>
+            <%if(transcation[i].status === "pending"){%> 
+              <span class="badge badge-warning">
+                <%=transcation[i].status%>
+              </span>
+              <%} else if(transcation[i].status === "success"){%>
+              <span class="badge badge-success">
+                <%=transcation[i].status%>
+              </span>
+               <%}else{%>
+                <span class="badge badge-danger">
+                    <%=transcation[i].status%>
+                </span>
+               <%}%>
+        </td>
+        <td><%=transcation[i]?.player?.name??'-'%></td>
+        <td>
+          <%if(transcation[i].status === "pending"){%> 
+          <form action="/transcation/status/<%=transcation[i]._id%>?status=failed&_method=PUT"
+            method="post" style="display:inline-block">
+            <button class="btn btn-danger btn-sm" ">
+              <i class="fas fa-times"></i>Tolak
+            </button>
+          </form>
+          <form action="/transcation/status/<%=transcation[i]._id%>?status=success&_method=PUT"
+            method="post" style="display:inline-block">
+            <button class="btn btn-info btn-sm" ">
+              <i class="fas fa-check"></i>Terima
+            </button>
+          </form>
+          <%}else{%>
+
+          <%}%>
+
+        </td>
+      </tr>
+      <%}%>
+    </tbody>
+  </table>
+  
